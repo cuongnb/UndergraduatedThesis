@@ -34,7 +34,7 @@
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
 \usepackage[newcommands]{ragged2e}
-\usepackage[top=2cm, bottom=3.5cm, left=3.5cm, right=2cm]{geometry}
+\usepackage[top=2cm, bottom=3cm, left=3.5cm, right=2cm]{geometry}
 \renewcommand{\baselinestretch}{1.2}
 \usepackage{lastpage}
 \setcounter{page}{3}
@@ -70,7 +70,7 @@ Ngày nay với sự bùng nổ của internet, dữ liệu văn bản chữ ng�
 \begin{center}
 \textbf{Abstract}
 \end{center}
-Nowadays, text data is become massive with the explosion of internet. The problem of analyzing information from these big data is a hard challenge which attract the concentration from many data analyst. Topic modeling such as Latent Dirichlet Allocation (LDA) has appeared in recent years and become an effective method to explore hidden semantic structure of documents. Streaming learning versions of LDA have been proposed to solve problem of massive data in condition of limiting computing resources but only focus on information from data. This thesis propose a method that give knowledge of vocabulary from other domains into learning process to improve the generalization capacity of model. The experiments on 3 data sets : Grolier, Nytimes and Pubmed showed that the results about the generalization capacity of proposal method are better than original LDA streaming model. 
+Nowadays, text data becomes massive with the explosion of the internet. The problem of analyzing information from such big data is a hard challenge which attracts the concentration from many data analysts. Topic modeling such as Latent Dirichlet Allocation (LDA) has appeared in recent years and become an effective method to explore hidden semantic structure of documents. Streaming learning versions of LDA have been proposed to solve the problem of massive data in condition of limiting computing resources but only focus on information from data. This thesis proposed a method that applied the knowledge of vocabulary from other domains into learning process to improve the generalization capacity of the model. The experiments on 3 data sets : Grolier, Nytimes and Pubmed showed that the results about the generalization capacity of proposal method are better than original LDA streaming model. 
 \end{abstract}
 \newpage 
 \tableofcontents
@@ -182,14 +182,14 @@ Bố cục của đồ án như sau: phần 2 giới thiệu những khái niệ
 	\subsection{Mô hình chủ đề}
 	Trong phần ta sẽ trình bày các nội dung chính về mô hình chủ đề được sử dụng trong đồ án.
 \subsubsection{Học chủ đề ẩn của dữ liệu văn bản chữ}
-\textbf{\textit{Khái niệm chủ đề}}: Một chủ đề của dữ liệu có thể hiểu theo nghĩa thông thường, chẳng hạn chủ đề về thể thao, văn hóa hay chủ đề về chính trị, giáo dục…Căn cứ vào những từ xuất hiện trong văn bản mà ta có thể xác định văn bản đang nói về vấn đề gì. Nếu trong văn bản chứa các từ "tổng thống", "chủ tịch", "bầu cử", "cử tri", "đại biểu" , "nghị viện", " quốc hội" thì nó sẽ được xem là một văn bản nói về chính trị chứ không phải là thể thao. Như vậy một chủ đề được xác định bởi một tập hợp các từ đồng thời xuất hiện để làm nổi lên chủ đề đó trong một văn bản. Theo mặt toán học, mỗi chủ đề được biểu diễn bằng một phân phối các từ trong tập từ điển, các từ khác nhau. 
+\textbf{\textit{Khái niệm chủ đề}}: Một chủ đề của dữ liệu có thể hiểu theo nghĩa thông thường, chẳng hạn chủ đề về thể thao, văn hóa hay chủ đề về chính trị, giáo dục…Căn cứ vào những từ xuất hiện trong văn bản mà ta có thể xác định văn bản đang nói về vấn đề gì. Nếu trong văn bản chứa các từ: \textit{ tổng thống, chủ tịch, bầu cử, cử tri, đại biểu , nghị viện,  quốc hội, tranh cử \ldots} thì nó sẽ được xem là một văn bản nói về chính trị chứ không phải là thể thao. Như vậy một chủ đề được xác định bởi một tập hợp các từ đồng thời xuất hiện để làm nổi lên chủ đề đó trong một văn bản. Theo mặt toán học, mỗi chủ đề được biểu diễn bằng một phân phối các từ trong tập từ điển, các từ khác nhau. 
 \par 
 Một mô hình phân tích các chủ đề nằm trong dữ liệu nhằm mục tiêu học ra các chủ đề ẩn này.  Bằng việc xem xét cái văn bản dưới góc độ tổ hợp của các chủ đề ẩn, chúng ta có thể rút ra các đặc điểm của tập văn bản từ đó có nhiều ứng dụng như xác định các nội dung đặc trưng nằm trong tập văn bản, phân cụm các văn bản trong tập văn bản.
 \par 
 Học cấu trúc ẩn của dữ liệu, bắt đầu với mô hình phân tích ngữ nghĩa ẩn ( Latent Semantic Indexing - LSI) \textsuperscript{\cite{LSI}} và probabilitic Latent Semantic Indexing ( pLSI)\textsuperscript{\cite{plsi}} là lớp phương pháp học tại đó các văn bản và từ vựng được ánh xạ sang một không gian gọi là "không gian ngữ nghĩa ẩn"  hay được gọi là các "chủ đề ẩn". Trong một tập văn bản với D văn bản và V từ được mô tả trong ma trận $WORD_{[D\times V]}$, giả thiết có K chủ đề ẩn. Khi đó tập văn bản được chuyển sang không gian chủ đề ẩn là ma trận $DOC_{[D\times K]}$ trong đó mỗi văn bản sẽ bao gồm một tập các chủ đề ẩn. Các từ sẽ được chuyển sang không gian $TOPIC_{[K\times V]}$ trong đó mỗi chủ đề sẽ gồm một tập hợp các từ với tỉ lệ khác nhau.
 \par
 
-Phương pháp LSI đơn thuần sử dụng thuật toán tất định phân tách trị riêng nhằm tìm ra hai ma trận $DOC_{[D\times K]}$ và $TOPIC_{[K\times V]}$ sao cho $WORD_{[D\times V]} = DOC_{[D\times K]} * TOPIC_{[K\times V]} $. Mô hình pLSI tiến một bước dài hơn khi xem mỗi văn bản là tập hợp trộn của các chủ đề theo một phân phối cho trước và mỗi chủ đề ẩn sẽ là một phân phối xác xuất theo từ. Lúc này, việc tìm các tham số của mô hình ( gồm hai ma trận $DOC$ và $TOPIC$) để cực đại hóa xác xuất xảy ra của ma trận $WORD$:\\
+Phương pháp LSI đơn thuần sử dụng thuật toán tất định phân tách trị riêng nhằm tìm ra hai ma trận $DOC_{[D\times K]}$ và $TOPIC_{[K\times V]}$ sao cho $WORD_{[D\times V]} = DOC_{[D\times K]} * TOPIC_{[K\times V]} $. Mô hình pLSI tiến một bước dài hơn khi xem mỗi văn bản là tập hợp trộn của các chủ đề theo một phân phối cho trước và mỗi chủ đề ẩn sẽ là một phân phối xác xuất theo từ. Lúc này, việc tìm các tham số của mô hình ( gồm hai ma trận $DOC$ và $TOPIC$) để cực đại hóa xác xuất xảy ra của ma trận $WORD$:
 \begin{center}max $probability(WORD | DOC, TOPIC)$\end{center}
 Ta thấy rằng 2 mô hình LSI và pLSI đều có số lượng tham số trong ma trận $DOC$ tỉ lệ với số lượng văn bản có trong tập văn bản, việc tỉ lệ tuyến tính của tham số mô hình với kích thước dữ liệu sẽ dẫn tới gia tăng kích thước lưu trữ của mô hình. Ngoài ra cả 2 phương pháp đều cố định số lượng văn bản được học nên không có khả năng phân tích văn bản mới xuất hiện hoặc phải học lại tất cả từ đầu, đồng nghĩa với việc mô hình LSI và pLSI không có tính tổng quát hóa cho dữ liệu.
 Để khắc phục những hạn chế này, mô hình LDA được đề xuất và đã đạt được những hiệu quả tốt.
@@ -241,8 +241,8 @@ Như vậy mô hình LDA gồm có 3 phân mức:
 \item Mức văn bản: tham số $\theta$ xác định cho mỗi văn bản
 \item Mức từ: Các chủ đề của mỗi từ $z$ cùng từ quan sát được $w$
 \end{itemize}
+Khi đó phân bố hợp của các biến ẩn $\boldsymbol\theta$, tập $N$ chủ đề $\mathbf{z}$ và tập $N$ từ $\mathbf{w}$ theo mô hình xác suất xác định bởi:\\
 
-Khi đó phân bố hợp của các biến ẩn $\boldsymbol\theta$, tập $N$ chủ đề $\mathbf{z}$ và tập $N$ từ $\mathbf{w}$ theo mô hình xác suất xác định bởi:
 \begin{equation}
 p(\boldsymbol{\theta},\mathbf{z},\mathbf{w},\boldsymbol\beta \mid \boldsymbol\alpha,\boldsymbol\eta) = p(\boldsymbol{\theta}\mid \boldsymbol\alpha )\prod_{n=1}^{N}p(z_n \mid \boldsymbol{\theta})p(w_n \mid z_n,\boldsymbol\beta)\prod_{k=1}^{K}p(\beta_k\mid \boldsymbol\eta)
 \end{equation}
@@ -271,7 +271,7 @@ Bước suy diễn có thể viết lại về hàm phân phối xác xuất:
 \begin{equation}
 p(\boldsymbol\theta,\mathbf{z},\boldsymbol\beta \mid \mathbf{w},\alpha,\eta) = \frac{p(\boldsymbol\theta,\mathbf{z},\mathbf{w},\boldsymbol\beta \mid \alpha,\eta)}{p(\mathbf{w},\alpha,\eta)}
 \end{equation}
-Việc giải trực tiếp vấn đề tối ưu của phân phối này là điều không khả thi \textsuperscript{\cite{intract}}, vì vậy chúng ta cần sử dụng những phương pháp xấp xỉ. Sau đây là 3 phương pháp được sử dụng trong đồ án để giải quyết bài toán suy diễn.\\ 
+Việc giải trực tiếp vấn đề tối ưu của phân phối này là điều không khả thi\textsuperscript{\cite{intract}}, vì vậy chúng ta cần sử dụng những phương pháp xấp xỉ. Sau đây là 3 phương pháp được sử dụng trong đồ án để giải quyết bài toán suy diễn.\\ 
 \textbf{\textit{1. Phương pháp biến phân }}
 \par 
 Phương pháp suy diễn biến phân cho mô hình LDA được trình bày trong bài báo gốc \textit{Latent Dirichlet Allocation}\textsuperscript{\cite{blei2003latent}}.
@@ -298,6 +298,9 @@ q(\beta) &= Dir(\beta | \lambda)
 \begin{equation}
 \log p(\mathbf{w} | \alpha, \eta) = L(\gamma,\phi,\lambda;\alpha,\eta) + D(q(\theta,\mathbf{z},\beta| \gamma,\boldsymbol\phi,\lambda) || p(\theta,\mathbf{z},\beta | \alpha,\eta,\mathbf{w}))
 \end{equation} 
+\par Hàm $L(\gamma,\phi,\lambda;\alpha,\eta)$ chính là hàm chặn dưới cho phân phối hậu nghiệm, còn được gọi là ELBO ( \textbf{E}vidence \textbf{L}ower \textbf{BO}und ). $D(q(\theta,\mathbf{z},\beta| \gamma,\boldsymbol\phi,\lambda) || p(\theta,\mathbf{z},\beta | \alpha,\eta,\mathbf{w})$ là khoảng cách Kullback–Leibler của 2 phân phối $q(\theta,\mathbf{z},\beta| \gamma,\boldsymbol\phi,\lambda)$ và $p(\theta,\mathbf{z},\beta | \alpha,\eta,\mathbf{w})$\\
+Việc cực đại hóa $L$ đồng nghĩa với việc giảm khoảng cách $D$ khiến phân phối  $q(\theta,\mathbf{z},\beta| \gamma,\boldsymbol\phi,\lambda)$ càng gần với phân phối $p(\theta,\mathbf{z},\beta | \alpha,\eta,\mathbf{w})$.\\
+Chính vì vậy  $q(\theta,\mathbf{z},\beta| \gamma,\boldsymbol\phi,\lambda)$ được gọi là phân phối biến phân của $p(\theta,\mathbf{z},\beta | \alpha,\eta,\mathbf{w})$
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.6]{img/variationalinfer.png}
@@ -305,9 +308,7 @@ q(\beta) &= Dir(\beta | \lambda)
 \label{fig:variationalinfer}
 \caption{Suy diễn biến phân cho mô hình LDA}
 \end{figure}
-Hàm $L(\gamma,\phi,\lambda;\alpha,\eta)$ chính là hàm chặn dưới cho phân phối hậu nghiệm, còn được gọi là ELBO ( \textbf{E}vidence \textbf{L}ower \textbf{BO}und ). $D(q(\theta,\mathbf{z},\beta| \gamma,\boldsymbol\phi,\lambda) || p(\theta,\mathbf{z},\beta | \alpha,\eta,\mathbf{w})$ là khoảng cách Kullback–Leibler của 2 phân phối $q(\theta,\mathbf{z},\beta| \gamma,\boldsymbol\phi,\lambda)$ và $p(\theta,\mathbf{z},\beta | \alpha,\eta,\mathbf{w})$\\
-Việc cực đại hóa $L$ đồng nghĩa với việc giảm khoảng cách $D$ khiến phân phối  $q(\theta,\mathbf{z},\beta| \gamma,\boldsymbol\phi,\lambda)$ càng gần với phân phối $p(\theta,\mathbf{z},\beta | \alpha,\eta,\mathbf{w})$.\\
-Chính vì vậy  $q(\theta,\mathbf{z},\beta| \gamma,\boldsymbol\phi,\lambda)$ được gọi là phân phối biến phân của $p(\theta,\mathbf{z},\beta | \alpha,\eta,\mathbf{w})$
+
 \par 
 Khai triển $L(\gamma,\phi,\lambda;\alpha,\eta)$ theo mô hình xác xuất của LDA
 \begin{equation}
@@ -339,7 +340,7 @@ Các giá trị kì vọng:
 Kí hiệu $\Psi$ được sử dụng là hàm digamma. \\
 Các công thức (\ref{eq:variantphi}) và (\ref{varaintgamma}) chính là các công thức suy diễn thông tin cho mỗi văn bản $d$.
 \par
-Như vậy với phương pháp biến phân, chúng ta không tìm được trực tiếp giá trị của các tham số trong mô hình ban đầu nhưng tìm được các biến phân của chúng. Đây có thể xem như là một không gian con cho các phân phối của các tham số trong mô hình. Việc sử dụng biến phân như trình bày ở trên sẽ giới hạn không gian tìm kiếm của các tham số trong miền biến phân. Do vậy kết quả tìm được có thể không phải là tối ưu toàn cục, để mở rộng không gian tìm kiếm hơn, phương pháp suy diễn sử dụng thuật toán Frank-Wolfe được đề xuất trong các bài báo \textit{Fully sparse topic models} \cite{fullyspared}, \textit{Inference in topic models i : sparsity and trade-off}\cite{fwinfer}, \textit{Dual online inference for latent Dirichlet Allocation} \cite{dualonline}, đã thể hiện đem lại hiệu quả cao hơn về chất lượng hàm tối ưu.
+Như vậy với phương pháp biến phân, chúng ta không tìm được trực tiếp giá trị của các tham số trong mô hình ban đầu nhưng tìm được các biến phân của chúng. Đây có thể xem như là một không gian con cho các phân phối của các tham số trong mô hình. Việc sử dụng biến phân như trình bày ở trên sẽ giới hạn không gian tìm kiếm của các tham số trong miền biến phân. Do vậy kết quả tìm được có thể không phải là tối ưu toàn cục, để mở rộng không gian tìm kiếm hơn, phương pháp suy diễn sử dụng thuật toán Frank-Wolfe được đề xuất trong các bài báo \textit{Fully sparse topic models}\textsuperscript{\cite{fullyspared}}, \textit{Inference in topic models i : sparsity and trade-off}\textsuperscript{\cite{fwinfer}}, \textit{Dual online inference for latent Dirichlet Allocation}\textsuperscript{\cite{dualonline}}, đã thể hiện đem lại hiệu quả cao hơn về chất lượng hàm tối ưu.
 
 \par
 \textbf{\textit{2. Phương pháp suy diễn Frank-Wolfe}}\\
@@ -389,13 +390,13 @@ Ta kí hiệu
 \theta \leftarrow OFW(\beta,\alpha,d)
 \end{equation}
 
-Các chứng minh đã chỉ ra thuật toán Online-Frankwolfe có tốc độ hội tụ và chất lượng hàm tối ưu hơn FW và VB. Tuy nhiên cả Frank-Wolfe và Online Frank-Wolfe đều chưa trực tiếp tính ra được tham số của các chủ đề của từ trong văn bản $z$. Song chúng ta có thể suy diễn ra nó từ tính chất của mô hình
+Các chứng minh đã chỉ ra thuật toán Online-Frankwolfe có tốc độ hội tụ và chất lượng hàm tối ưu hơn FW và VB. Tuy nhiên cả Frank-Wolfe và Online Frank-Wolfe đều chưa trực tiếp tính ra được tham số của các chủ đề của từ trong văn bản $z$. Song chúng ta có thể suy diễn ra nó từ tính chất của mô hình:
 \begin{equation}
 \phi_{jk} = p(z = k | w = j, d)
 \end{equation}
 Từ đó rút ra được:
 \begin{equation}
-\phi_{jk} \sim \theta_{k}\beta_{kj}
+\phi_{jk} \propto \theta_{k}\beta_{kj}
 \end{equation}
 
 \subsubsection{Vấn đề cập nhật các tham số toàn cục}
@@ -454,7 +455,8 @@ Phân tách dòng dữ liệu thành các chuỗi minibatch:
 \begin{equation}
 p(\Phi | C_1,…,C_B ) \propto [ \prod_{b=1}^{B} p(C_b |  \Phi )]p(\Phi) \propto [\prod_{b=1}^{B} p(\Phi | C_b) p(\Phi)^{-1}]p(\Phi)]
 \end{equation}
-Tiếp tục áp dụng xấp xỉ, ta được
+Tiếp tục áp dụng xấp xỉ, ta được:\\
+
 \begin{equation}\label{eq:oldstreamupdate}
 p(\Phi |C_1,...,C_B) \approx q(\Phi) \propto [\prod_{b=1}^{B} A(C_b,p(\Phi)) p(\Phi)^{-1}]p(\Phi)
 \end{equation}
@@ -487,17 +489,17 @@ Chủ đề thể thao \newline (Sport) & Acrobatics, Aerobics, Aikido, Badminto
 \hline
 \caption{Một số các chủ đề và các từ đặc trưng}
 \label{tb:topicword}
-
 \end{longtable}
-
 \end{center}
 %\end{table}
 \subsubsection{Luật Zipf’s}
 Luật Zip’s \textsuperscript{\cite{zipf2},\cite{zipflaw}} là một luật được rút ra từ thực nghiệm thông qua quá trình thống kê toán học. Luật được đề xuất bởi nhà ngôn ngữ học: George Kingsley Zipf. Luật Zipf’s được phát biểu như sau:\\[0.4cm]
+\begin{center}
 \fbox{\begin{minipage}{0.9\textwidth}
 Trong một tập văn bản của một ngôn ngữ tự nhiên, tần số xuất hiện của các từ tỉ lệ nghịch với hạng của nó trong bảng xếp hạng tần số của từ.
 \end{minipage}}
-\\[.4cm]
+\end{center}
+%\\[.4cm]
  Công thức toán học của luật:
 \begin{equation}
 f(k;s,N) = \frac{1/k^s}{\sum_{n=1}^N(1/n^s)}
@@ -556,19 +558,16 @@ Tiếp tục sử dụng phương pháp xấp xỉ, tuy nhiên tại đây, ở 
 \begin{equation}
 p(\Phi | C_1,...,C_B,\eta) \approx q(\Phi | \eta)p(\Phi | \eta) = A(C,q_{B-1}(\Phi | \eta)).p(\Phi | \eta)
 \end{equation}
-Tiếp tục sử dụng biến đổi Bayes, ta được
+Tiếp tục sử dụng biến đổi Bayes, ta được:
 \begin{equation}\label{eq:newstreaminggupdate2}
 p(\Phi | C_1,...,C_B,\eta) \approx q(\Phi | \eta) p(\Phi | \eta) \propto [\prod_{b=1}^{B} A(C_b,p(\Phi | \eta))] p(\Phi | \eta)
 \end{equation}
 Công thức (\ref{eq:newstreaminggupdate2}) khác với công thức cũ (\ref{eq:oldstreamupdate}) ở lượng thông tin có từ prior $p(\Phi | \eta)$ được liên tục tăng cường sau mỗi mini-batch.\\
 Khi sử dụng các phương pháp xấp xỉ, họ hàm mũ thường được sử dụng. Giả thiết khi đó:
-\begin{equation}
- p (\Phi | \eta) \propto exp(\zeta_{0|\eta} T(\Phi | \eta))
-\end{equation}
-và
-\begin{equation}
-q_{b}(\Phi | \eta ) \propto exp(\zeta_{b|\eta} T(\Phi | \eta))
-\end{equation}
+\begin{align}
+ p (\Phi | \eta) \propto exp(\zeta_{0|\eta} T(\Phi | \eta)) \\
+ q_{b}(\Phi | \eta ) \propto exp(\zeta_{b|\eta} T(\Phi | \eta))
+\end{align}
 Bây giờ, công thức học dòng trở thành:
 \begin{equation}\label{eq:newstreamingupdate}
 p (\Phi | C_1,...,C_B,\eta) \approx q(\Phi | \eta) \propto [\prod_{b=1}^{B} exp(\zeta_{0|\eta} + \sum_{b=1}^{B} \zeta_{b|\eta})]T(\Phi | \eta)
@@ -586,7 +585,6 @@ Từ phần \ref{sub:wordknowledge}, ta đã có một số các tri thức về
 \textbf{\textit{1. Tri thức từ các từ đặc trưng của chủ đề}}\\
 Trong trường hợp này, chúng ta đã có tri thức về nhiều chủ đề, như vậy dạng của $\eta$ là một ma trận $K \times V $ với $K$ là số chủ đề, $V$ là kích thước từ vựng.
 \begin{itemize}
-
 \item Khởi tạo tất cả các giá trị của $\eta$ bằng một giá trị $\epsilon_0 < 1$. Mục đích của điều này để thể hiện các từ đều chưa được xác định rõ, khởi tạo mặc định bằng một giá trị nhỏ để đặc trưng cho tính thưa của các chủ đề.
 \item Với các chủ đề đã xác định được từ đặc trưng seed-word, gán cho giá trị các từ này trong ma trận $\eta$ một giá trị hằng số $c > \epsilon$. Như vậy chúng ta đã nhấn mạnh vào việc các từ đặc trưng này sẽ có xác suất xuất hiện nhiều hơn trong chủ đề.
 \end{itemize}
@@ -611,7 +609,7 @@ Lúc này ta có thuật toán học dòng cho LDA như sau:
 
 \begin{algorithm}[H]
 \begin{algorithmic}
-\caption{Thuật toán học dòng tăng cường tri thức tiên nghiệm cho mô hình LDA}
+\caption{Học dòng tăng cường tri thức tiên nghiệm cho mô hình LDA}
 \label{streamupdateLDA}
 \REQUIRE{ Tri thức tiên nghiệm $\eta$, tham số $\alpha$, chuỗi các minibatch văn bản $C_1,C_2,...$}
 \ENSURE{Dãy các xấp xỉ biến phân  $\lambda_1, \lambda_2,…$\\}
@@ -628,7 +626,7 @@ $\lambda_{b} \leftarrow \lambda_{b-1}+\tilde{\lambda_{b}}$
 Trong mô hình học không có bổ sung tri thức:
 \begin{algorithm}[H]
 \begin{algorithmic}
-\caption{Thuật toán học dòng \emph{không} tăng cường tri thức tiên nghiệm cho mô hình LDA}
+\caption{Học dòng \emph{không} tăng cường tri thức tiên nghiệm cho mô hình LDA}
 \label{streamupdateLDAOld}
 \REQUIRE{ Tri thức tiên nghiệm $\eta$, tham số $\alpha$, chuỗi các minibatch văn bản $C_1,C_2,...$}
 \ENSURE{Dãy các xấp xỉ biến phân  $\lambda_1, \lambda_2,…$\\}
@@ -708,7 +706,7 @@ Chỉ số sử dụng để đánh giá khả năng tiên đoán của mô hìn
 \par
 Sau khi mỗi minibatch học xong, độ tổng quát được đánh giá lại. Việc so sánh giá trị này giữa các phương pháp học sẽ đưa ra đánh giá mô hình nào có khả năng tổng quát cao hơn.
 \subsection{Dữ liệu thử nghiệm}
-Thử nghiệm được thực hiện trên 3 bộ dữ liệu Grolier, Nytimes và Pubmed. Để mô phỏng cho việc học dòng, tập văn bản sẽ được chia thành các đoạn minibatch và đưa liên tục vào mô hình. Bảng sau đưa ra các thông số của bộ dữ liệu.
+Thử nghiệm được thực hiện trên 3 bộ dữ liệu Grolier, Nytimes và Pubmed\textsuperscript{\cite{dataset}}. Để mô phỏng cho việc học dòng, tập văn bản sẽ được chia thành các đoạn minibatch và đưa liên tục vào mô hình. Bảng sau đưa ra các thông số của bộ dữ liệu.
 \begin{table}[H]
 \begin{center}
 \begin{tabular}{|l|l|l|}
@@ -725,8 +723,8 @@ Pubmed & 141.044 & 100.000\\
 \end{center}
 \end{table}
 \begin{itemize}
-\item Bộ dữ liệu Grolier gồm các bài viết trong từ điển bách khoa của nhà xuất bản Grolier. [Nguồn ] gồm 23.044 văn bản với lượng từ vựng 15.276 từ
-\item Bộ dữ liệu Nytimes gồm các bài viết từ hãng báo Newyork Times, [ Nguồn ]. Bộ dữ liệu sử dụng gồm 200.000 văn bản với 102.660 từ
+\item Bộ dữ liệu Grolier gồm các bài viết trong từ điển bách khoa của nhà xuất bản Grolier. Bộ dữ liệu gồm 23.044 văn bản với lượng từ vựng 15.276 từ
+\item Bộ dữ liệu Nytimes gồm các bài viết từ hãng báo Newyork Times. Bộ dữ liệu sử dụng gồm 200.000 văn bản với 102.660 từ
 \item Bộ dữ liệu Pubmed là các bài viết liên quan về sức khỏe - Thuộc trung tâm thông tin sinh học mỹ. Thử nghiệm sử dụng tập con gồm 100.000 văn bản với 141.044 từ vựng.
 \end{itemize}
 \subsection{Trích xuất tri thức tiên nghiệm}
@@ -751,8 +749,7 @@ Việc đánh giá sẽ được thực hiện lần lượt cho các bộ dữ 
 \item Trục $x$ (Minibatch) là chiều tăng theo số minibatch nhận được
 \item Trục $y$ (Log predictive probability) là giá trị đánh giá khả năng tiên đoán của mô hình
 \end{itemize}
-Đường biểu diễn kết quả cho phương pháp giữ tri thức tiên nghiệm được kí hiệu là $KP$ (Keeping prior)là đường với chấm tròn. Đường biểu diễn kết quả cho phương pháp cũ không tăng cường tri thức tiên nghiệm được gọi là $Origin$, là đường với ô vuông.
-\newpage
+Đường biểu diễn kết quả cho phương pháp giữ tri thức tiên nghiệm được đề xuất kí hiệu là $KP$ (Keeping prior) biểu diễn bằng đường màu đỏ với chấm tròn. Đường biểu diễn kết quả cho phương pháp cũ không tăng cường tri thức tiên nghiệm được gọi là $Origin$, là đường màu xanh với ô vuông.
 \subsubsection{Kết quả đánh giá cho bộ dữ liệu Grolier}
 
 \begin{figure*}[h!]
@@ -835,7 +832,6 @@ Việc đánh giá sẽ được thực hiện lần lượt cho các bộ dữ 
 \end{center}
 \end{figure*}
 \par Kết quả cho bộ Grolier được thể hiện ở các hình \ref{fig:gro_fw},\ref{fig:gro_ofw} và \ref{fig:gro_vb}. Khả năng tiên đoán của mô hình học dòng có tăng cường prior ($KP$) tốt hơn hẳn so với mô hình nguyên gốc ($Origin$) khi sử dụng suy diễn FW (hình \ref{fig:gro_fw}), và cũng tốt hơn khi sử dụng $OFW$ (hình \ref{fig:gro_ofw}). Tuy nhiên với suy diễn $VB$, thì phương pháp mới $KP$ lại kém một chút nhưng không đáng kể so với phương pháp cũ (hình \ref{fig:gro_vb}). Nhưng mặt khác giá trị đánh giá khả năng tổng quát của $FW$ và $OFW$ đạt tới gần $-36.000$ trong khi $VB$ chỉ đạt $-38.000$, nói cách khác, thuật toán sử dụng $VB$ cho ra kết quả kém hơn so với việc sử dụng $FW$ và $OFW$. Với riêng suy diễn $OFW$, về những minibatch cuối, kết quả 2 phương pháp có xu hướng gần bằng nhau. 
-\newpage
 \subsubsection{Kết quả đánh giá cho bộ dữ liệu Nytimes}
 
 \begin{figure*}[h!]
@@ -930,8 +926,7 @@ anchor=west
 \end{center}
 \end{figure*}
 Kết quả được thể hiện ở các hình \ref{fig:nyt_fw}, \ref{fig:nyt_ofw} và \ref{fig:nyt_vb}. Chúng ta có thể thấy kết quả có phần tương tự như ở bộ Grolier.\\
-Khả năng tổng quát của phương pháp mới $KP$ vẫn vượt trội so với phương pháp cũ $Origin$ khi sử dụng suy diễn $FW$ và cao hơn rõ rệt khi sử dụng suy diễn $OFW$. Ở bộ dữ liệu này ta không thấy được sự khác biệt về chất lượng giữa 2 phương pháp khi sử dụng suy diễn $VB$, song kết quả với suy diễn sử dụng $VB$ ( đạt $-43.000$ ) vẫn kém hơn $FW$ và $OFW$ ($-42.000$). Do vậy khả năng tổng quát của mô hình khi sử dụng suy diễn $FW$ và $OFW$ của mô hình mới đạt kết quả tốt là có ý nghĩa hơn.\\ Chúng ta còn thấy thêm ở minibatch đầu tiên, phương pháp mới $KP$ cho chất lượng mô hình nhanh chóng được đẩy lên cao hơn so với phương pháp cũ ( hình \ref{fig:nyt_ofw}).
-\newpage
+Khả năng tổng quát của phương pháp mới $KP$ vẫn vượt trội so với phương pháp cũ $Origin$ khi sử dụng suy diễn $FW$ và cao hơn rõ rệt khi sử dụng suy diễn $OFW$, chúng ta còn thấy thêm ở minibatch đầu tiên, phương pháp mới $KP$ cho chất lượng mô hình nhanh chóng được đẩy lên cao hơn so với phương pháp cũ ( hình \ref{fig:nyt_ofw}). Ở bộ dữ liệu này ta không thấy được sự khác biệt về chất lượng giữa 2 phương pháp khi sử dụng suy diễn $VB$, song kết quả với suy diễn sử dụng $VB$ ( đạt $-43.000$ ) vẫn kém hơn $FW$ và $OFW$ ($-42.000$). Do vậy khả năng tổng quát của mô hình khi sử dụng suy diễn $FW$ và $OFW$ của mô hình mới đạt kết quả tốt là có ý nghĩa hơn.\\ .
 \subsubsection{Kết quả thử nghiệm với bộ dữ liệu Pubmed}
 \begin{figure*}[ht]
 \begin{center}
@@ -1022,7 +1017,7 @@ anchor=west
 \end{figure*}
 \par Kết quả được thể hiện ở các hình \ref{fig:pub_fw}, \ref{fig:pub_ofw}, \ref{fig:pub_vb}. Các kết quả vẫn chung đặc điểm với 2 bộ Grolier và Nytimes:\\
 Kết quả với suy diễn $FW$ cho thấy mô hình mới cho khả năng tổng quát cao hơn so với mô hình gốc ban đầu. Điều tương tự cũng xảy ra khi sử dụng suy diễn $OFW$ tuy nhiên kết quả không có sự chênh lệch quá lớn, và càng về cuối, 2 kết quả lại càng gần. Ở bộ Pubmed, kết quả của 2 phương pháp khi sử dụng $VB$ là gần như giống nhau song hiệu quả kém hơn $FW$ cùng $OFW$ ở mặt chỉ số đánh giá ($-44.000 $ so với $-42.000$).\\
-Kết quả của phương pháp mới ngay từ những minibatch đầu tiên vẫn có xu hướng cao và gia tăng nhan hơn so với phương pháp cũ.
+Kết quả của phương pháp mới ngay từ những minibatch đầu tiên vẫn có xu hướng cao và gia tăng nhan hơn so với phương pháp cũ với $FW$ và $OFW$.
 \newpage
 \subsection{Nhận xét chung}
 Chúng ta có thể thấy qua các kết quả từ 3 bộ dữ liệu Grolier, Nytimes và Pubmed: 
